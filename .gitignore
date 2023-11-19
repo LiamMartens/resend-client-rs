@@ -1,0 +1,13 @@
+/target
+
+
+# Added by cargo
+#
+# already existing elements were commented out
+
+#/target
+/Cargo.lock
+
+# tests files
+__tests__/target
+__tests__/Cargo.lock
