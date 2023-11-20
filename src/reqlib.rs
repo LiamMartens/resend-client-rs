@@ -1,7 +1,7 @@
 use const_format::concatcp;
 use reqwest::{header::HeaderValue, Error, RequestBuilder};
-use serde::Deserialize;
 use serde::de::DeserializeOwned;
+use serde::Deserialize;
 use std::collections::HashMap;
 
 const VERSION: &'static str = "0.1.0";

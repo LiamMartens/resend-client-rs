@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use reqwest::{Error, Method};
+use reqwest::Method;
 use serde::{Deserialize, Serialize};
 
 use crate::reqlib::{APIResponse, ReqClient};
