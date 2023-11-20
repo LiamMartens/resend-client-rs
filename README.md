@@ -4,7 +4,9 @@
 [![Released API docs](https://docs.rs/resend-client-rs/badge.svg)](https://docs.rs/resend-client-rs)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-Client for sending emails with Resend. Main logic ported from official [Go library](https://github.com/resendlabs/resend-go)
+Client for sending emails with Resend. Main logic ported from official [Go library](https://github.com/resendlabs/resend-go).
+
+This library is more complete than other available options since it includes the domain endpoints.
 
 ## Installation
 

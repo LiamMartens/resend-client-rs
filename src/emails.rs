@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use reqwest::{Error, Method};
 use serde::{Deserialize, Serialize};
 
-use crate::reqlib::ReqClient;
+use crate::reqlib::{APIResponse, ReqClient};
 
 #[derive(Debug, Serialize, Clone)]
 pub struct Tag {
@@ -74,30 +74,21 @@ impl EmailService {
     pub async fn send<'a>(
         &self,
         params: &'a SendEmailRequest<'a>,
-    ) -> Result<SendEmailResponse, Error> {
+    ) -> Result<APIResponse<SendEmailResponse>, APIResponse<SendEmailResponse>> {
         let req = self
             .req_client
             .new_body_request(Method::POST, "emails", Some(params));
-        let result = req.send().await;
-        match result {
-            Ok(response) => match response.error_for_status() {
-                Ok(success_response) => Ok(success_response.json().await.unwrap()),
-                Err(err) => Err(err),
-            },
-            Err(err) => Err(err),
-        }
+        let result = self.req_client.exec(req).await;
+        result
     }
 
-    pub async fn get<'a>(&self, email_id: &'a str) -> Result<Email, Error> {
-        let path = format!("emails/{}", email_id);
+    pub async fn get<'a, T: Into<String>>(
+        &self,
+        email_id: T,
+    ) -> Result<APIResponse<Email>, APIResponse<Email>> {
+        let path = format!("emails/{}", email_id.into());
         let req = self.req_client.new_request(Method::GET, &path[..]);
-        let result = req.send().await;
-        match result {
-            Ok(response) => match response.error_for_status() {
-                Ok(success_response) => Ok(success_response.json().await.unwrap()),
-                Err(err) => Err(err),
-            },
-            Err(err) => Err(err),
-        }
+        let result = self.req_client.exec::<Email>(req).await;
+        result
     }
 }
